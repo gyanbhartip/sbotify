@@ -1,0 +1,71 @@
+.now-playing-info-container {
+  display: flex;
+}
+
+.now-playing-info {
+  padding-left: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.now-playing-info > div > p {
+  margin: 0;
+  padding: 0;
+}
+
+.now-playing-info > div:first-child {
+  color: rgb(233, 233, 233);
+}
+
+.now-playing-info > div:last-child {
+  font-size: 0.85rem;
+  color: rgb(196, 196, 196);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.buttons {
+  width: 60%;
+  margin: 0 auto;
+  min-width: 200px;
+  max-width: 260px;
+  padding-top: 1vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  font-size: 1.25rem;
+  background: #292929;
+  /* color: rgb(30, 200, 100); */
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 50px;
+}
+
+.progress-bar {
+  padding: 1vh 2vw;
+  margin: 0 2vw;
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+}
+.current-time,
+.duration {
+  padding: 0 2rem;
+}
+
+.progress-bar-slider {
+  width: 100%;
+}
+
+.progress-bar-slider > input {
+  width: 100%;
+  margin: 0 auto;
+}
