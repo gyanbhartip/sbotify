@@ -1,4 +1,4 @@
-import "../Styles/ControlsModule.css";
+import "../Styles/Controls.css";
 import React, { useState, useRef, useEffect } from "react";
 import { FaAngleDoubleLeft } from "react-icons/fa/";
 import { FaAngleDoubleRight } from "react-icons/fa/";
@@ -22,17 +22,14 @@ const Controls = () => {
   const animationRef = useRef();
   const volumeBar = useRef();
 
-  useEffect(() => {
-    audioElement.current.volume = volume;
-  }, [volume]);
-
+  //setting the audio duration values
   const onLoadedMetadata = async () => {
     const audioDuration = Math.floor(audioElement.current.duration);
     setDuration(audioDuration);
     progressBar.current.max = audioDuration;
     await changeVolume();
   };
-
+  //formatting the current/total durations displayed next to the progress bar
   const formatDuration = (durationInSeconds) => {
     const minutes = Math.floor(durationInSeconds / 60);
     const minutesFormatted = minutes < 10 ? `0${minutes}` : minutes;
@@ -40,7 +37,7 @@ const Controls = () => {
     const secondsFormatted = seconds < 10 ? `0${seconds}` : seconds;
     return `${minutesFormatted}:${secondsFormatted}`;
   };
-
+  //play/pause functionality
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
 
@@ -52,7 +49,7 @@ const Controls = () => {
       cancelAnimationFrame(animationRef.current);
     }
   };
-
+  //progress bar
   const whilePlaying = () => {
     progressBar.current.value = audioElement.current.currentTime;
     setCurrentTime(progressBar.current.value);
@@ -63,7 +60,7 @@ const Controls = () => {
     audioElement.current.currentTime = progressBar.current.value;
     setCurrentTime(progressBar.current.value);
   };
-
+  //seeking backwards and forwards
   const seekBack = () => {
     progressBar.current.value = Number(progressBar.current.value) - 10;
     changeRange();
@@ -80,21 +77,25 @@ const Controls = () => {
       audioElement.current.play();
     }
   };
-
+  //Switching to next/previous song
+  const nextTrack = () => {
+    console.log("next track");
+  };
+  const prevTrack = () => {
+    console.log("previous track");
+  };
+  //Changing the playback volume
   const changeVolume = () => {
     const currentVolume = Number(volumeBar.current.value);
     setVolume(currentVolume);
-    // audioElement.current.volume = volume;
   };
-
+  useEffect(() => {
+    audioElement.current.volume = volume;
+  }, [volume]);
+  //mute/unmute functionality
   const handleMute = () => {
     audioElement.current.muted = !audioElement.current.muted;
     setIsMuted(audioElement.current.muted);
-    // if (isMuted) {
-    //     audioElement.current.volume = 0;
-    // } else {
-    //     audioElement.current.volume = Number(volumeBar.current.value);
-    // }
   };
 
   return (
@@ -125,7 +126,7 @@ const Controls = () => {
         ></audio>
         <div className="buttons">
           <button>
-            <ImPrevious2 />
+            <ImPrevious2 onClick={prevTrack} />
           </button>
           <button onClick={seekBack}>
             <FaAngleDoubleLeft />
@@ -137,12 +138,11 @@ const Controls = () => {
             <FaAngleDoubleRight />
           </button>
           <button>
-            <ImNext2 />
+            <ImNext2 onClick={nextTrack} />
           </button>
         </div>
         <div className="progress-bar">
           <div className="current-time">{formatDuration(currentTime)}</div>
-          {/* <div className="progress-bar-slider"> */}
           <input
             ref={progressBar}
             type="range"
@@ -150,7 +150,6 @@ const Controls = () => {
             onChange={changeRange}
             className="progress-bar-slider"
           />
-          {/* </div> */}
           <div className="duration">
             {duration && !isNaN(duration) && formatDuration(duration)}
           </div>

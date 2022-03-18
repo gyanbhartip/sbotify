@@ -43,7 +43,6 @@
 button {
   font-size: 1.25rem;
   background: #292929;
-  /* color: rgb(30, 200, 100); */
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 50px;
@@ -63,9 +62,4 @@ button {
 
 .progress-bar-slider {
   width: 100%;
-}
-
-.progress-bar-slider > input {
-  width: 100%;
-  margin: 0 auto;
 }
