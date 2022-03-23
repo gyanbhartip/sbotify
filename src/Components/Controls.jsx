@@ -10,6 +10,7 @@ import { ImVolumeHigh } from "react-icons/im/";
 import { ImVolumeMedium } from "react-icons/im/";
 import { ImVolumeLow } from "react-icons/im/";
 import { ImVolumeMute2 } from "react-icons/im/";
+import { axiosCall } from "../Utils/Spotify";
 
 const Controls = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -38,7 +39,18 @@ const Controls = () => {
     return `${minutesFormatted}:${secondsFormatted}`;
   };
   //play/pause functionality
-  const togglePlayPause = () => {
+  const togglePlayPause = async () => {
+    //me/player/play
+    //me/player/pause
+    // if (isPlaying) {
+    // axiosCall.put("me/player/pause");
+    // } else {
+    // console.log(
+    //   await axiosCall.put("me/player/play", {
+    //     context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
+    //   })
+    // );
+    // }
     setIsPlaying(!isPlaying);
 
     if (!isPlaying) {
@@ -103,24 +115,24 @@ const Controls = () => {
       <div className="now-playing-info-container">
         <div>
           <img
-            src="http://127.0.0.1:8080/metroexodus.jpg"
+            src="https://i.scdn.co/image/ab67616d0000b273b8d4efadb5afc88aa5f95783"
             alt="now playing"
             height="70vh"
           ></img>
         </div>
         <div className="now-playing-info">
           <div>
-            <p>The Bunker - Metro Exodus</p>
+            <p>Industry Baby</p>
           </div>
           <div>
-            <p>Oleksii Omelchuk</p>
+            <p>Onur Atil</p>
           </div>
         </div>
       </div>
       <div className="controls">
         <audio
           ref={audioElement}
-          src="http://127.0.0.1:8080/TheBunker.mp3"
+          src="https://p.scdn.co/mp3-preview/387bf41eadc7ef78752be2ec2670eb8aaa9a4059?cid=774b29d4f13844c495f206cafdad9c86"
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
         ></audio>
