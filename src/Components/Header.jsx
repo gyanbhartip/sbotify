@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { axiosCall } from "../Utils/Spotify";
 import "../Styles/Header.css";
 import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
+import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -29,7 +30,15 @@ const Header = () => {
   };
 
   return (
-    <>
+    <header className="header-container">
+      <div className="nav-buttons">
+        <div className="backward">
+          <IoChevronBackOutline />
+        </div>
+        <div className="forward">
+          <IoChevronForwardOutline />
+        </div>
+      </div>
       <div className="user-info-container" onClick={dropdownClickHandler}>
         <div className="visible-wrapper">
           <img src={image} alt="" className="user-image" />
@@ -47,7 +56,7 @@ const Header = () => {
           </div>
         )}
       </div>
-    </>
+    </header>
   );
 };
 

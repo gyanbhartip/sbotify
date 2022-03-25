@@ -1,0 +1,45 @@
+.sidebar-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.sidebar-navigation {
+  font-size: 1.3rem;
+}
+
+.sidebar-navigation-list {
+  padding-left: 1.25rem;
+  list-style: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.sidebar-navigation-item {
+  color: rgba(204, 204, 204, 0.75);
+}
+
+.sidebar-navigation-item:hover {
+  color: rgba(204, 204, 204, 0.9);
+}
+
+.sidebar-playlists {
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0.5rem;
+}
+
+.sidebar-playlist-items {
+  color: rgba(190, 190, 190, 0.75);
+  overflow: clip;
+}
+
+.sidebar-playlist-items:hover {
+  color: rgba(190, 190, 190, 0.9);
+}
