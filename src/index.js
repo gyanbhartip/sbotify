@@ -1,7 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './Components/App';
+import store from './redux/store';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import App from './Components/App';
 import Profile from './Components/Profile';
 import Home from './Components/Home';
 import Search from './Components/Search';
@@ -10,17 +12,19 @@ import LikedSongs from './Components/LikedSongs';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} >
-          <Route index element={<Home />} />
-          <Route path="search" element={<Search />} />
-          <Route path="library" element={<Library />} />
-          <Route path="likedsongs" element={<LikedSongs />} />
-          <Route path='profile' element={<Profile />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} >
+            <Route index element={<Home />} />
+            <Route path="search" element={<Search />} />
+            <Route path="library" element={<Library />} />
+            <Route path="likedsongs" element={<LikedSongs />} />
+            <Route path='profile' element={<Profile />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

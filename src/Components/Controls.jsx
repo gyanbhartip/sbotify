@@ -13,6 +13,9 @@ import { ImVolumeMute2 } from "react-icons/im/";
 import { axiosCall } from "../Utils/Spotify";
 
 const Controls = () => {
+  const [audioSrc, setAudioSrc] = useState(
+    "https://p.scdn.co/mp3-preview/387bf41eadc7ef78752be2ec2670eb8aaa9a4059?cid=774b29d4f13844c495f206cafdad9c86"
+  );
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -132,7 +135,7 @@ const Controls = () => {
       <div className="controls">
         <audio
           ref={audioElement}
-          src="https://p.scdn.co/mp3-preview/387bf41eadc7ef78752be2ec2670eb8aaa9a4059?cid=774b29d4f13844c495f206cafdad9c86"
+          src={audioSrc}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
         ></audio>
@@ -162,9 +165,7 @@ const Controls = () => {
             onChange={changeRange}
             className="progress-bar-slider"
           />
-          <div className="duration">
-            {duration && !isNaN(duration) && formatDuration(duration)}
-          </div>
+          <div className="duration">{duration && formatDuration(duration)}</div>
         </div>
       </div>
       <div className="volume-control">

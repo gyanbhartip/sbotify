@@ -7,3 +7,38 @@ td {
   border: 2px solid black;
   border-collapse: collapse;
 }
+
+.liked-songs-page {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 8fr;
+}
+
+.top-banner {
+  display: flex;
+  gap: 2rem;
+}
+
+.bottom-songs {
+  background: rgba(62, 62, 62, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(124, 124, 124, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(124, 124, 124, 0.18);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(300px, 1fr));
+  justify-items: center;
+}
+
+.bottom-songs > h4 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 1rem;
+  text-transform: capitalize;
+}
+
+.bottom-songs > p {
+  font-size: 0.85rem;
+}
