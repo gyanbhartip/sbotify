@@ -1,6 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import store from './redux/store';
+import { createRoot } from 'react-dom/client';
+import { store } from './redux/store';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from './Components/App';
@@ -10,7 +10,9 @@ import Search from './Components/Search';
 import Library from './Components/Library';
 import LikedSongs from './Components/LikedSongs';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root'));
+
+root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
@@ -25,6 +27,5 @@ ReactDOM.render(
         </Routes>
       </BrowserRouter>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

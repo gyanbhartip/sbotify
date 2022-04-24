@@ -18,7 +18,6 @@ function App() {
     //clear the hash value from the browser url
     window.location.hash = "";
     if (!token && hash) {
-      console.log(hash);
       //if there is no token in the local storage and there is a hash in the url
       const token = hash.split("&")[0].split("=")[1];
       window.localStorage.setItem("token", token);

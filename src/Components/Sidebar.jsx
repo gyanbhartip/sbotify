@@ -1,20 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "../Styles/Sidebar.css";
 import { Link } from "react-router-dom";
-import {
-  AiOutlineHome,
-  AiFillHome,
-  AiOutlineHeart,
-  AiTwotoneHeart,
-} from "react-icons/ai";
-import { FiSearch } from "react-icons/fi";
-import { RiSearchEyeFill } from "react-icons/ri";
-import { IoLibraryOutline, IoLibrarySharp, IoLibrary } from "react-icons/io5";
+import { Home, Search, HeartOutline, Library } from "../Utils/icons";
 import { axiosCall } from "../Utils/Spotify";
-import Playlist from "./Playlist";
+// import Playlist from "./Playlist";
 
 const Sidebar = () => {
   const [playlists, setPlaylists] = useState([]);
+
   useEffect(() => {
     const fetchPlaylists = async () => {
       const { data } = await axiosCall.get("me/playlists");
@@ -29,22 +22,22 @@ const Sidebar = () => {
         <ul className="sidebar-navigation-list">
           <li>
             <Link to="/" className="sidebar-navigation-item">
-              <AiOutlineHome /> Home
+              <Home /> Home
             </Link>
           </li>
           <li>
             <Link to="search" className="sidebar-navigation-item">
-              <FiSearch /> Search
+              <Search /> Search
             </Link>
           </li>
           <li>
             <Link to="library" className="sidebar-navigation-item">
-              <IoLibraryOutline /> Library
+              <Library /> Library
             </Link>
           </li>
           <li style={{ marginTop: "auto" }}>
             <Link to="likedsongs" className="sidebar-navigation-item">
-              <AiOutlineHeart /> Liked Songs
+              <HeartOutline /> Liked Songs
             </Link>
           </li>
         </ul>

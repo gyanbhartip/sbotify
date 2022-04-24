@@ -1,3 +1,7 @@
+svg {
+  max-width: 20px;
+}
+
 .sidebar-container {
   display: flex;
   flex-direction: column;
@@ -25,6 +29,7 @@
 
 .sidebar-navigation-item:hover {
   color: rgba(204, 204, 204, 0.9);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .sidebar-playlists {

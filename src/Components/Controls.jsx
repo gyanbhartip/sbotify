@@ -1,38 +1,45 @@
 import "../Styles/Controls.css";
-import React, { useState, useRef, useEffect } from "react";
-import { FaAngleDoubleLeft } from "react-icons/fa/";
-import { FaAngleDoubleRight } from "react-icons/fa/";
-import { ImPrevious2 } from "react-icons/im/";
-import { ImNext2 } from "react-icons/im/";
-import { FaPlay } from "react-icons/fa/";
-import { FaPause } from "react-icons/fa/";
-import { ImVolumeHigh } from "react-icons/im/";
-import { ImVolumeMedium } from "react-icons/im/";
-import { ImVolumeLow } from "react-icons/im/";
-import { ImVolumeMute2 } from "react-icons/im/";
-import { axiosCall } from "../Utils/Spotify";
+import React, { useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setIsPlaying,
+  setDuration,
+  setCurrentTime,
+  setIsMuted,
+  setVolume,
+} from "../redux/features/controls/controlsSlice";
+import {
+  Prev,
+  SeekBack,
+  Play,
+  Pause,
+  SeekAhead,
+  Next,
+  Mute,
+  VolumeLow,
+  VolumeMed,
+  VolumeHigh,
+} from "../Utils/icons";
 
 const Controls = () => {
-  const [audioSrc, setAudioSrc] = useState(
-    "https://p.scdn.co/mp3-preview/387bf41eadc7ef78752be2ec2670eb8aaa9a4059?cid=774b29d4f13844c495f206cafdad9c86"
-  );
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [duration, setDuration] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.05);
+  const { isPlaying, duration, currentTime, isMuted, volume, track } =
+    useSelector((store) => store.controls);
+
+  const dispatch = useDispatch();
+
   const audioElement = useRef();
   const progressBar = useRef();
   const animationRef = useRef();
   const volumeBar = useRef();
 
   //setting the audio duration values
-  const onLoadedMetadata = async () => {
+  const onLoadedMetadata = () => {
     const audioDuration = Math.floor(audioElement.current.duration);
-    setDuration(audioDuration);
+    dispatch(setDuration(audioDuration));
     progressBar.current.max = audioDuration;
-    await changeVolume();
+    changeVolume();
   };
+
   //formatting the current/total durations displayed next to the progress bar
   const formatDuration = (durationInSeconds) => {
     const minutes = Math.floor(durationInSeconds / 60);
@@ -41,20 +48,10 @@ const Controls = () => {
     const secondsFormatted = seconds < 10 ? `0${seconds}` : seconds;
     return `${minutesFormatted}:${secondsFormatted}`;
   };
+
   //play/pause functionality
   const togglePlayPause = async () => {
-    //me/player/play
-    //me/player/pause
-    // if (isPlaying) {
-    // axiosCall.put("me/player/pause");
-    // } else {
-    // console.log(
-    //   await axiosCall.put("me/player/play", {
-    //     context_uri: "spotify:album:5ht7ItJgpBH7W6vJ5BqpPr",
-    //   })
-    // );
-    // }
-    setIsPlaying(!isPlaying);
+    dispatch(setIsPlaying(!isPlaying));
 
     if (!isPlaying) {
       audioElement.current.play();
@@ -64,34 +61,37 @@ const Controls = () => {
       cancelAnimationFrame(animationRef.current);
     }
   };
+
   //progress bar
   const whilePlaying = () => {
     progressBar.current.value = audioElement.current.currentTime;
-    setCurrentTime(progressBar.current.value);
+    dispatch(setCurrentTime(progressBar.current.value));
     animationRef.current = requestAnimationFrame(whilePlaying);
   };
 
   const changeRange = () => {
     audioElement.current.currentTime = progressBar.current.value;
-    setCurrentTime(progressBar.current.value);
+    dispatch(setCurrentTime(progressBar.current.value));
   };
-  //seeking backwards and forwards
+
+  //seeking backwards and forwards 5 seconds
   const seekBack = () => {
-    progressBar.current.value = Number(progressBar.current.value) - 10;
+    progressBar.current.value = Number(progressBar.current.value) - 5;
     changeRange();
     if (!isPlaying) {
-      setIsPlaying(true);
+      dispatch(setIsPlaying(true));
       audioElement.current.play();
     }
   };
   const seekAhead = () => {
-    progressBar.current.value = Number(progressBar.current.value) + 10;
+    progressBar.current.value = Number(progressBar.current.value) + 5;
     changeRange();
     if (!isPlaying) {
-      setIsPlaying(true);
+      dispatch(setIsPlaying(true));
       audioElement.current.play();
     }
   };
+
   //Switching to next/previous song
   const nextTrack = () => {
     console.log("next track");
@@ -99,66 +99,72 @@ const Controls = () => {
   const prevTrack = () => {
     console.log("previous track");
   };
+
   //Changing the playback volume
   const changeVolume = () => {
     const currentVolume = Number(volumeBar.current.value);
-    setVolume(currentVolume);
+    dispatch(setVolume(currentVolume));
   };
   useEffect(() => {
     audioElement.current.volume = volume;
   }, [volume]);
+
   //mute/unmute functionality
   const handleMute = () => {
     audioElement.current.muted = !audioElement.current.muted;
-    setIsMuted(audioElement.current.muted);
+    dispatch(setIsMuted(audioElement.current.muted));
   };
+
+  console.log(track);
 
   return (
     <>
       <div className="now-playing-info-container">
         <div>
           <img
-            src="https://i.scdn.co/image/ab67616d0000b273b8d4efadb5afc88aa5f95783"
+            src={track?.track?.album.images[0].url}
             alt="now playing"
+            width="auto"
             height="70vh"
           ></img>
         </div>
         <div className="now-playing-info">
           <div>
-            <p>Industry Baby</p>
+            <p>{track?.track?.name}</p>
           </div>
           <div>
-            <p>Onur Atil</p>
+            <p>{track?.track?.artists[0].name}</p>
           </div>
         </div>
       </div>
       <div className="controls">
         <audio
           ref={audioElement}
-          src={audioSrc}
+          src={track?.track?.preview_url}
           preload="metadata"
           onLoadedMetadata={onLoadedMetadata}
         ></audio>
         <div className="buttons">
-          <button>
-            <ImPrevious2 onClick={prevTrack} />
+          <button aria-label="previous track button">
+            <Prev onClick={prevTrack} />
           </button>
-          <button onClick={seekBack}>
-            <FaAngleDoubleLeft />
+          <button onClick={seekBack} aria-label="seek back button">
+            <SeekBack />
           </button>
-          <button onClick={togglePlayPause}>
-            {isPlaying ? <FaPause /> : <FaPlay />}
+          <button onClick={togglePlayPause} aria-label="play/pause button">
+            {isPlaying ? <Pause /> : <Play />}
           </button>
-          <button onClick={seekAhead}>
-            <FaAngleDoubleRight />
+          <button onClick={seekAhead} aria-label="seek ahead button">
+            <SeekAhead />
           </button>
-          <button>
-            <ImNext2 onClick={nextTrack} />
+          <button aria-label="next track button">
+            <Next onClick={nextTrack} />
           </button>
         </div>
         <div className="progress-bar">
           <div className="current-time">{formatDuration(currentTime)}</div>
           <input
+            aria-label="seek slider"
             ref={progressBar}
             type="range"
             defaultValue="0"
@@ -169,18 +175,19 @@ const Controls = () => {
         </div>
       </div>
       <div className="volume-control">
-        <button onClick={handleMute}>
+        <button onClick={handleMute} aria-label="mute button">
           {volume === 0 || isMuted ? (
-            <ImVolumeMute2 />
+            <Mute />
           ) : volume > 0 && volume <= 0.35 ? (
-            <ImVolumeLow />
+            <VolumeLow />
           ) : volume > 0.35 && volume <= 0.7 ? (
-            <ImVolumeMedium />
+            <VolumeMed />
           ) : (
-            <ImVolumeHigh />
+            <VolumeHigh />
           )}
         </button>
         <input
+          aria-label="volume slider"
           ref={volumeBar}
           type="range"
           defaultValue={volume}

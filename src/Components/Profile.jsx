@@ -1,17 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setProfile } from "../redux/features/profile/profileSlice";
 import { axiosCall } from "../Utils/Spotify";
 import "../Styles/Profile.css";
 
 const Profile = () => {
-  const [profile, setProfile] = useState();
+  const dispatch = useDispatch();
+  const { profile } = useSelector((store) => store.profile);
+
+  // const [profile, setProfile] = useState();
 
   useEffect(() => {
     const fetchProfile = async () => {
       const { data } = await axiosCall.get("me");
-      setProfile(data);
+      dispatch(setProfile(data));
     };
     fetchProfile();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

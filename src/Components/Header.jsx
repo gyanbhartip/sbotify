@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { axiosCall } from "../Utils/Spotify";
 import "../Styles/Header.css";
-import { BsCaretDownFill, BsCaretUpFill } from "react-icons/bs";
-import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
+import {
+  ChevronUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+} from "../Utils/icons";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -33,17 +37,17 @@ const Header = () => {
     <header className="header-container">
       <div className="nav-buttons">
         <div className="backward">
-          <IoChevronBackOutline />
+          <ChevronLeft />
         </div>
         <div className="forward">
-          <IoChevronForwardOutline />
+          <ChevronRight />
         </div>
       </div>
       <div className="user-info-container" onClick={dropdownClickHandler}>
         <div className="visible-wrapper">
           <img src={image} alt="" className="user-image" />
           <h2 className="user-name">{name}</h2>
-          {isDropdownClicked ? <BsCaretUpFill /> : <BsCaretDownFill />}
+          {isDropdownClicked ? <ChevronUp /> : <ChevronDown />}
         </div>
         {isDropdownClicked && (
           <div className="logout-container">

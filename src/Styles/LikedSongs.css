@@ -15,11 +15,13 @@ td {
 }
 
 .top-banner {
+  margin: 0 1.5rem;
   display: flex;
   gap: 2rem;
 }
 
 .bottom-songs {
+  margin: 0 1.5rem;
   background: rgba(62, 62, 62, 0.15);
   box-shadow: 0 8px 32px 0 rgba(124, 124, 124, 0.37);
   backdrop-filter: blur(4px);
@@ -27,7 +29,7 @@ td {
   border-radius: 10px;
   border: 1px solid rgba(124, 124, 124, 0.18);
   display: grid;
-  grid-template-columns: repeat(5, minmax(300px, 1fr));
+  /* grid-template-columns: repeat(5, minmax(300px, 1fr)); */
   justify-items: center;
 }
 
@@ -41,4 +43,10 @@ td {
 
 .bottom-songs > p {
   font-size: 0.85rem;
+}
+
+.song {
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(300px, 1fr));
 }
