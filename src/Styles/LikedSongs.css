@@ -21,6 +21,9 @@ td {
 }
 
 .bottom-songs {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 70vh;
   margin: 0 1.5rem;
   background: rgba(62, 62, 62, 0.15);
   box-shadow: 0 8px 32px 0 rgba(124, 124, 124, 0.37);
@@ -45,8 +48,26 @@ td {
   font-size: 0.85rem;
 }
 
+.song-header {
+  position: sticky;
+  top: 0;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(300px, 1fr));
+  align-items: center;
+  background-color: rgb(77, 77, 77);
+}
+
 .song {
   padding: 0 1rem;
   display: grid;
   grid-template-columns: repeat(5, minmax(300px, 1fr));
+  align-items: center;
+}
+.song:hover {
+  background-color: rgba(124, 124, 124, 0.15);
+}
+
+.selected {
+  background-color: rgba(124, 124, 124, 0.55);
 }

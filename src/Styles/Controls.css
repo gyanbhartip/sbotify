@@ -3,6 +3,7 @@
 }
 
 .now-playing-info {
+  width: 20ch;
   padding-left: 1vw;
   display: flex;
   flex-direction: column;

@@ -9,6 +9,7 @@ import Home from './Components/Home';
 import Search from './Components/Search';
 import Library from './Components/Library';
 import LikedSongs from './Components/LikedSongs';
+import Playlist from './Components/Playlist';
 
 const root = createRoot(document.getElementById('root'));
 
@@ -23,6 +24,7 @@ root.render(
             <Route path="library" element={<Library />} />
             <Route path="likedsongs" element={<LikedSongs />} />
             <Route path='profile' element={<Profile />} />
+            <Route path='playlist/:id' element={<Playlist />} />
           </Route>
         </Routes>
       </BrowserRouter>

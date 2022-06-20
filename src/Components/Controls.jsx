@@ -1,5 +1,5 @@
 import "../Styles/Controls.css";
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setIsPlaying,
@@ -8,6 +8,7 @@ import {
   setIsMuted,
   setVolume,
 } from "../redux/features/controls/controlsSlice";
+import { setCurrentlyPlaying } from "../redux/features/tracks/tracksSlice";
 import {
   Prev,
   SeekBack,
@@ -63,11 +64,11 @@ const Controls = () => {
   };
 
   //progress bar
-  const whilePlaying = () => {
+  const whilePlaying = useCallback(() => {
     progressBar.current.value = audioElement.current.currentTime;
     dispatch(setCurrentTime(progressBar.current.value));
     animationRef.current = requestAnimationFrame(whilePlaying);
-  };
+  }, [dispatch]);
 
   const changeRange = () => {
     audioElement.current.currentTime = progressBar.current.value;
@@ -109,24 +110,33 @@ const Controls = () => {
     audioElement.current.volume = volume;
   }, [volume]);
 
+  useEffect(() => {
+    audioElement.current.play();
+    dispatch(setIsPlaying(true));
+    dispatch(setCurrentlyPlaying(track?.track?.id));
+    animationRef.current = requestAnimationFrame(whilePlaying);
+  }, [track, dispatch, whilePlaying]);
+
   //mute/unmute functionality
   const handleMute = () => {
     audioElement.current.muted = !audioElement.current.muted;
     dispatch(setIsMuted(audioElement.current.muted));
   };
 
-  console.log(track);
-
   return (
     <>
       <div className="now-playing-info-container">
         <div>
-          <img
-            src={track?.track?.album.images[0].url}
-            alt="now playing"
-            width="auto"
-            height="70vh"
-          ></img>
+          {Object.keys(track).length === 0 ? (
+            <div style={{ width: "100px" }}></div>
+          ) : (
+            <img
+              src={track?.track?.album.images[0].url}
+              alt="now playing"
+              width="auto"
+              height="70vh"
+            ></img>
+          )}
         </div>
         <div className="now-playing-info">
           <div>
